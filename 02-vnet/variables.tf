@@ -1,3 +1,43 @@
+variable "create_resource_group" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "create_vnet" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "create_routetable_public" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "create_routetable_private" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "public_subnets" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "private_subnets" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = false
+}
+variable "network_security_group" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "nat_gateway" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = false
+}
 variable "environment" {
   default = "test" ## inserted value
   type    = string
@@ -129,12 +169,12 @@ variable "subnet_names_public" {
 }
 
 variable "address_subnets_private" {
-  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  default = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
   type    = list(string)
 }
 
 variable "subnet_names_private" {
-  default = ["subnet-1", "subnet-2", "subnet-3"]
+  default = ["subnet-4", "subnet-5", "subnet-6"]
   type    = list(string)
 }
 

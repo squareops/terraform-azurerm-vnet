@@ -54,3 +54,8 @@ variable "subnet_ids" {
   description = "Ids of subnets to associate with the Nat Gateway"
   type        = list(string)
 }
+
+variable "name" {
+  description = "Name of the Nat Gateway and its resources"
+  type        = string
+}

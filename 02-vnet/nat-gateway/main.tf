@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "public_ip_for_nat" {
   count               = var.create_public_ip ? 1 : 0
   allocation_method   = "Static"
   location            = var.location
-  name                = local.public_ip_name
+  name                = var.name
   resource_group_name = var.resource_group_name
   zones               = var.public_ip_zones
   sku                 = "Standard"
@@ -10,23 +10,23 @@ resource "azurerm_public_ip" "public_ip_for_nat" {
   domain_name_label = var.public_ip_domain_name_label
   reverse_fqdn      = var.public_ip_reverse_fqdn
 
-  tags = merge(
-    local.default_tags,
-    var.extra_tags
-  )
+  # tags = merge(
+  #   local.default_tags,
+  #   var.extra_tags
+  # )
 }
 
 resource "azurerm_nat_gateway" "natgw" {
   location                = var.location
-  name                    = local.nat_gateway_name
+  name                    = var.name
   resource_group_name     = var.resource_group_name
   sku_name                = "Standard"
   idle_timeout_in_minutes = var.nat_gateway_idle_timeout
 
-  tags = merge(
-    local.default_tags,
-    var.extra_tags
-  )
+  # tags = merge(
+  #   local.default_tags,
+  #   var.extra_tags
+  # )
 }
 
 resource "azurerm_nat_gateway_public_ip_association" "pip_assoc" {

@@ -1,10 +1,12 @@
 module "resource-group" {
+  # create                   = var.create_resource_group ? 1 : 0
   source                  = "./resource-group"
   resource_group_name     = format("%s-%s-resource-group", var.environment, var.name)
   resource_group_location = var.resource_group_location
 }
 
 module "vnet" {
+  # count                = var.create_vnet ? 1 : 0
   depends_on           = [module.resource-group]
   source               = "./vnet"
   resource_group_name  = module.resource-group.resource_group_name
@@ -17,6 +19,7 @@ module "vnet" {
 }
 
 module "routetable_public" {
+  # count                         = var.create_routetable_public ? 1 : 0
   source                        = "./routetable"
   depends_on                    = [module.resource-group]
   resource_group_name           = module.resource-group.resource_group_name
@@ -29,6 +32,7 @@ module "routetable_public" {
 }
 
 module "routetable_private" {
+  # count                         = var.create_routetable_private ? 1 : 0
   source                        = "./routetable"
   depends_on                    = [module.resource-group]
   resource_group_name           = module.resource-group.resource_group_name
@@ -41,6 +45,7 @@ module "routetable_private" {
 }
 
 module "public_subnets" {
+  # count                                                 = var.create_public_subnets ? 1 : 0
   source                                                = "./subnets"
   depends_on                                            = [module.routetable_public]
   address_subnets                                       = var.address_subnets_public
@@ -48,29 +53,31 @@ module "public_subnets" {
   resource_group_name                                   = module.resource-group.resource_group_name
   virtual_network_name                                  = module.vnet.vnet_name
   route_table_id                                        = module.routetable_public.routetable_id
-  network_securitygroup_id                              = module.network-security-group.network_security_group_id
+  network_securitygroup_id                              = module.network_security_group.network_security_group_id
   subnet_enforce_private_link_service_network_policies  = var.subnet_enforce_private_link_service_network_policies_public
   subnet_enforce_private_link_endpoint_network_policies = var.subnet_enforce_private_link_endpoint_network_policies_public
   subnet_delegation                                     = var.subnet_delegation_public
   subnet_service_endpoints                              = var.subnet_service_endpoints_public
 }
 
-# module "private_subnets" {
-#   source                                                = "./subnets"
-#   depends_on                                            = [module.routetable_private]
-#   address_subnets                                       = var.address_subnets_private
-#   subnet_names                                          = var.subnet_names_private
-#   resource_group_name                                   = var.resource_group_name
-#   virtual_network_name                                  = var.vnet_name
-#   route_table_id                                        = module.routetable_private.routetable_id
-#   network_securitygroup_id                              = module.network-security-group.network_security_group_id
-#   subnet_enforce_private_link_service_network_policies  = var.subnet_enforce_private_link_service_network_policies_private
-#   subnet_enforce_private_link_endpoint_network_policies = var.subnet_enforce_private_link_endpoint_network_policies_private
-#   subnet_delegation                                     = var.subnet_delegation_private
-#   subnet_service_endpoints                              = var.subnet_service_endpoints_private
-# }
+module "private_subnets" {
+  # count                                                 = var.create_private_subnets ? 1 : 0
+  source                                                = "./subnets"
+  depends_on                                            = [module.routetable_private]
+  address_subnets                                       = var.address_subnets_private
+  subnet_names                                          = var.subnet_names_private
+  resource_group_name                                   = module.resource-group.resource_group_name
+  virtual_network_name                                  = module.vnet.vnet_name
+  route_table_id                                        = module.routetable_private.routetable_id
+  network_securitygroup_id                              = module.network_security_group.network_security_group_id
+  subnet_enforce_private_link_service_network_policies  = var.subnet_enforce_private_link_service_network_policies_private
+  subnet_enforce_private_link_endpoint_network_policies = var.subnet_enforce_private_link_endpoint_network_policies_private
+  subnet_delegation                                     = var.subnet_delegation_private
+  subnet_service_endpoints                              = var.subnet_service_endpoints_private
+}
 
-module "network-security-group" {
+module "network_security_group" {
+  # count                 = var.network_security_group ? 1 : 0
   depends_on            = [module.resource-group]
   source                = "Azure/network-security-group/azurerm"
   version               = "4.1.0"
@@ -79,16 +86,18 @@ module "network-security-group" {
   source_address_prefix = [join("", var.address_space)]
 }
 
-# module "nat_gateway" {
-#   source                      = "./nat-gateway"
-#   depends_on                  = [module.private_subnets]
-#   subnet_ids                  = module.private_subnets.subnet_id
-#   location                    = var.resource_group_location
-#   resource_group_name         = var.resource_group_name
-#   public_ip_domain_name_label = var.public_ip_domain_name_label
-#   public_ip_reverse_fqdn      = var.public_ip_reverse_fqdn
-#   create_public_ip            = var.create_public_ip
-#   public_ip_zones             = var.public_ip_zones
-#   public_ip_ids               = var.public_ip_ids
-#   nat_gateway_idle_timeout    = var.nat_gateway_idle_timeout
-# }
+module "nat_gateway" {
+  # count                       = var.nat_gateway ? 1 : 0
+  source                      = "./nat-gateway"
+  depends_on                  = [module.private_subnets]
+  name                        = format("%s-%s-nat", var.environment, var.name)
+  subnet_ids                  = module.private_subnets.subnet_id
+  location                    = var.resource_group_location
+  resource_group_name         = module.resource-group.resource_group_name
+  public_ip_domain_name_label = var.public_ip_domain_name_label
+  public_ip_reverse_fqdn      = var.public_ip_reverse_fqdn
+  create_public_ip            = var.create_public_ip
+  public_ip_zones             = var.public_ip_zones
+  public_ip_ids               = var.public_ip_ids
+  nat_gateway_idle_timeout    = var.nat_gateway_idle_timeout
+}
