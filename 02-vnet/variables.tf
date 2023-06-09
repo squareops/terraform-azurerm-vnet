@@ -1,52 +1,10 @@
-variable "create_resource_group" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = true
+variable "zones" {
+  description = "Number of Availability Zone to be used by VNet"
+  default     = 3
+  type        = number
 }
-variable "create_vnet" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = true
-}
-variable "create_routetable_public" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = true
-}
-variable "create_routetable_private" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = true
-}
-variable "public_subnets" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = true
-}
-variable "private_subnets" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = false
-}
-variable "network_security_group" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = true
-}
-variable "nat_gateway" {
-  description = "Should we create a public IP or not?"
-  type        = bool
-  default     = false
-}
-variable "environment" {
-  default = "test" ## inserted value
-  type    = string
-}
-variable "name" {
-  default = "skaf" ## inserted value
-  type    = string
-}
-variable "tags" {
+
+variable "additional_tags" {
   description = "The tags to associate with your network and subnets."
   type        = map(string)
 
@@ -56,15 +14,59 @@ variable "tags" {
   }
 }
 
+variable "create_resource_group" {
+  description = "Should we create a public IP or not?"
+  type        = bool
+  default     = true
+}
+variable "create_vnet" {
+  description = "Should we create a VNet or not?"
+  type        = bool
+  default     = true
+}
+variable "create_public_subnets" {
+  description = "Should we create a public subnets or not?"
+  type        = bool
+  default     = true
+}
+variable "create_private_subnets" {
+  description = "Should we create a private subnets or not?"
+  type        = bool
+  default     = true
+}
+variable "create_database_subnets" {
+  description = "Should we create a private subnets or not?"
+  type        = bool
+  default     = true
+}
+variable "create_network_security_group" {
+  description = "Should we create a network security group or not?"
+  type        = bool
+  default     = true
+}
+variable "create_nat_gateway" {
+  description = "Should we create a NAT Gateway or not?"
+  type        = bool
+  default     = true
+}
+variable "environment" {
+  default = "test" ## inserted value
+  type    = string
+}
+variable "name" {
+  default = "skaf" ## inserted value
+  type    = string
+}
+
 variable "resource_group_location" {
   default = "eastus" ## inserted value
   type    = string
 }
 
 variable "address_space" {
-  type        = list(string)
+  type        = string
   description = "The address space that is used by the virtual network."
-  default     = ["10.0.0.0/16"]
+  default     = "10.0.0.0/16"
 }
 variable "ddos_protection_plan" {
   description = "The set of DDoS protection plan configuration"
@@ -84,7 +86,7 @@ variable "dns_servers" {
 variable "public_ip_zones" {
   description = "Public ip Zones to configure."
   type        = list(string)
-  default     = null
+  default     = ["1", "2"]
 }
 
 variable "public_ip_ids" {
@@ -128,54 +130,84 @@ variable "disable_bgp_route_propagation_private" {
   default     = "true"
 }
 
+variable "disable_bgp_route_propagation_database" {
+  description = "Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable."
+  default     = "true"
+}
+
 variable "route_prefixes_public" {
   description = "The list of address prefixes to use for each route."
-  default     = ["10.0.1.0/24"]
+  default     = []
 }
 
 variable "route_names_public" {
   description = "A list of public subnets inside the vNet."
-  default     = ["subnet1"]
+  default     = []
 }
 
 variable "route_nexthop_types_public" {
   description = "The type of Azure hop the packet should be sent to for each corresponding route.Valid values are 'VirtualNetworkGateway', 'VnetLocal', 'Internet', 'HyperNetGateway', 'None'"
-  default     = ["VnetLocal"]
+  default     = []
+}
+
+variable "route_prefixes_database" {
+  description = "The list of address prefixes to use for each route."
+  default     = []
+}
+
+variable "route_names_database" {
+  description = "A list of database subnets inside the vNet."
+  default     = []
+}
+
+variable "route_nexthop_types_database" {
+  description = "The type of Azure hop the packet should be sent to for each corresponding route.Valid values are 'VirtualNetworkGateway', 'VnetLocal', 'Internet', 'HyperNetGateway', 'None'"
+  default     = []
 }
 
 variable "route_prefixes_private" {
   description = "The list of address prefixes to use for each route."
-  default     = ["10.0.1.0/24"]
+  default     = []
 }
 
 variable "route_names_private" {
   description = "A list of public subnets inside the vNet."
-  default     = ["subnet1"]
+  default     = []
 }
 
 variable "route_nexthop_types_private" {
   description = "The type of Azure hop the packet should be sent to for each corresponding route.Valid values are 'VirtualNetworkGateway', 'VnetLocal', 'Internet', 'HyperNetGateway', 'None'"
-  default     = ["VnetLocal"]
+  default     = []
 }
 
 variable "address_subnets_public" {
-  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  type    = list(string)
+  default = []
+  type    = list(any)
 }
 
 variable "subnet_names_public" {
-  default = ["subnet-1", "subnet-2", "subnet-3"]
-  type    = list(string)
+  default = []
+  type    = list(any)
 }
 
 variable "address_subnets_private" {
-  default = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-  type    = list(string)
+  default = []
+  type    = list(any)
 }
 
 variable "subnet_names_private" {
-  default = ["subnet-4", "subnet-5", "subnet-6"]
-  type    = list(string)
+  default = []
+  type    = list(any)
+}
+
+variable "address_subnets_database" {
+  default = []
+  type    = list(any)
+}
+
+variable "subnet_names_database" {
+  default = []
+  type    = list(any)
 }
 
 variable "subnet_enforce_private_link_service_network_policies_public" {
@@ -227,4 +259,9 @@ variable "subnet_service_endpoints_private" {
   type        = map(any)
   default     = {}
   description = "A map of subnet name to service endpoints to add to the subnet."
+}
+variable "enable_logging" {
+  type        = string
+  description = "To enable NSG Logging"
+  default     = true
 }

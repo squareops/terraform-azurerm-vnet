@@ -6,7 +6,7 @@ variable "location" {
 variable "environment" {
   description = "Project environment"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "resource_group_name" {
@@ -58,4 +58,14 @@ variable "subnet_ids" {
 variable "name" {
   description = "Name of the Nat Gateway and its resources"
   type        = string
+}
+
+variable "tags" {
+  description = "The tags to associate with your network and subnets."
+  type        = map(string)
+
+  default = {
+    tag1 = ""
+    tag2 = ""
+  }
 }
