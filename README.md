@@ -25,9 +25,9 @@ module "vnet" {
   create_database_subnets                         = true
   create_nat_gateway                              = true
   enable_logging                                  = true
-  address_subnets_database                        = ["10.0.1.0/24]
-  address_subnets_private                         = ["10.0.2.0/24]
-  address_subnets_public                          = ["10.0.3.0/24]  
+  address_subnets_database                        = ["10.0.1.0/24"]
+  address_subnets_private                         = ["10.0.2.0/24"]
+  address_subnets_public                          = ["10.0.3.0/24"]  
 }
 ```
 Refer [this](https://github.com/squareops/terraform-aws-vpc/tree/main/examples) for more examples.
