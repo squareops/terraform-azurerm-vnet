@@ -23,7 +23,7 @@ locals {
 }
 
 module "resource-group" {
-  source                  = "./resource-group"
+  source                  = "./modules/resource-group"
   resource_group_name     = format("%s-%s-resource-group", var.environment, var.name)
   resource_group_location = var.resource_group_location
   tags                    = local.additional_tags
@@ -58,7 +58,7 @@ module "vnet" {
 
 module "routetable_public" {
   count                         = var.create_public_subnets ? 1 : 0
-  source                        = "./routetable"
+  source                        = "./modules/routetable"
   depends_on                    = [module.resource-group]
   resource_group_name           = module.resource-group.resource_group_name
   resource_group_location       = var.resource_group_location
@@ -72,7 +72,7 @@ module "routetable_public" {
 
 module "routetable_private" {
   count                         = var.create_private_subnets ? 1 : 0
-  source                        = "./routetable"
+  source                        = "./modules/routetable"
   depends_on                    = [module.resource-group]
   resource_group_name           = module.resource-group.resource_group_name
   resource_group_location       = var.resource_group_location
@@ -86,7 +86,7 @@ module "routetable_private" {
 
 module "routetable_database" {
   count                         = var.create_database_subnets ? 1 : 0
-  source                        = "./routetable"
+  source                        = "./modules/routetable"
   depends_on                    = [module.resource-group]
   resource_group_name           = module.resource-group.resource_group_name
   resource_group_location       = var.resource_group_location
@@ -111,7 +111,7 @@ module "network_security_group" {
 
 module "nat_gateway" {
   count                       = var.create_nat_gateway ? 1 : 0
-  source                      = "./nat-gateway"
+  source                      = "./modules/nat-gateway"
   depends_on                  = [module.vnet]
   name                        = format("%s-%s-nat", var.environment, var.name)
   subnet_ids                  = slice(module.vnet[0].vnet_subnets, 0, (length(module.vnet[0].vnet_subnets) - (length(local.public_subnets))))
@@ -128,7 +128,7 @@ module "nat_gateway" {
 
 module "logging" {
   count                     = var.enable_logging ? 1 : 0
-  source                    = "./logging"
+  source                    = "./modules/logging"
   name                      = var.name
   environment               = var.environment
   resource_group_location   = var.resource_group_location
