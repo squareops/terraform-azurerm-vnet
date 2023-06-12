@@ -2,7 +2,7 @@ locals {
   region      = "eastus"
   environment = "dev"
   name        = "skaf"
-  additional_aws_tags = {
+  additional_tags = {
     Owner      = "SquareOps"
     Expires    = "Never"
     Department = "Engineering"
@@ -23,4 +23,5 @@ module "vnet" {
   create_database_subnets = true
   create_nat_gateway      = true
   enable_logging          = true
+  additional_tags         = local.additional_tags
 }
