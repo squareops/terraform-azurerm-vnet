@@ -49,6 +49,11 @@ variable "create_nat_gateway" {
   type        = bool
   default     = true
 }
+variable "create_vpn" {
+  description = "Should we create a vpn or not?"
+  type        = bool
+  default     = true
+}
 variable "environment" {
   default = "test" ## inserted value
   type    = string

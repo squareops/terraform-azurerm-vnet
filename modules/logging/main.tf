@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "network_log_data" {
-  name                = "randomnameskaf"
+  name                = "randomnameskaf2"
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
 

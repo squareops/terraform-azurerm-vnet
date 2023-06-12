@@ -24,6 +24,7 @@ module "vnet" {
   create_private_subnets                          = true
   create_database_subnets                         = true
   create_nat_gateway                              = true
+  create_vpn                                      = true
   enable_logging                                  = true
   address_subnets_database                        = ["10.0.1.0/24"]
   address_subnets_private                         = ["10.0.2.0/24"]
@@ -89,14 +90,19 @@ This module supports three scenarios to create Network resource on AWS. Each wil
 
 | Name | Description |
 |------|-------------|
-| <a name="output_database_subnets"></a> [database\_subnets](#output\_database\_subnets) | List of IDs of database subnets |
-| <a name="output_intra_subnets"></a> [intra\_subnets](#output\_intra\_subnets) | List of IDs of Intra subnets |
-| <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | List of IDs of private subnets |
-| <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | List of IDs of public subnets |
-| <a name="output_vpc_cidr_block"></a> [vpc\_cidr\_block](#output\_vpc\_cidr\_block) | IPV4 CIDR Block for this VPC |
-| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | The ID of the VPC |
-| <a name="output_vpn_host_public_ip"></a> [vpn\_host\_public\_ip](#output\_vpn\_host\_public\_ip) | IP Address of VPN Server |
-| <a name="output_vpn_security_group"></a> [vpn\_security\_group](#output\_vpn\_security\_group) | Security Group ID of VPN Server |
+| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\resource\_group\_name) | Resource group name |
+| <a name="output_resource_group_location"></a> [resource\_group\_location](#output\resource\_group\_location) | Resource group location |
+| <a name="output_vnet_id"></a> [vnet\_id](#output\vnet\_id) | The ID of the VNet |
+| <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | Name of the VNet |
+| <a name="output_vnet_subnets"></a> [vnet\_subnets](#output\_vnet\_subnets) | IDs of the subnets |
+| <a name="output_vnet_subnets_name_id"></a> [vnet\_subnets\_name\_id](#output\_vnet\_subnets\_name\_id) | Name and ID mapping of the subnets |
+| <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | The ID of newly created network security group |
+| <a name="output_route_table_id_database"></a> [route\_table\_id\_database](#output\_route\_table\_id\_database) | The ID of the newly created Route Table for Database Subnets |
+| <a name="output_route_table_id_private"></a> [route\_table\_id\_private](#output\_route\_table\_id\_private) | The ID of the newly created Route Table for Private Subnets |
+| <a name="output_route_table_id_public"></a> [route\_table\_id\_public](#output\_route\_table\_id\_public) | The ID of the newly created Route Table for Public Subnets |
+| <a name="output_nat_gateway_id"></a> [nat\_gateway\_id](#output\_gateway\_id) | The ID of the newly created NAT gateway |
+| <a name="output_nat_gateway_name"></a> [nat\_gateway\_name](#output\_nat\_gateway\_name) | Name of the NAT Gateway |
+| <a name="output_nat_gateway_public_ips"></a> [nat\_gateway\_public\_ips](#output\_nat\_gateway\_public\_ips) | Public IP associated wth the Nat Gateway |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Contribute & Issue Report

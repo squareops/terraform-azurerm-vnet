@@ -126,13 +126,28 @@ module "nat_gateway" {
   tags                        = local.additional_tags
 }
 
-module "logging" {
-  count                     = var.enable_logging ? 1 : 0
-  source                    = "./modules/logging"
+# module "logging" {
+#   count                     = var.enable_logging ? 1 : 0
+#   source                    = "./modules/logging"
+#   name                      = var.name
+#   environment               = var.environment
+#   resource_group_location   = var.resource_group_location
+#   resource_group_name       = module.resource-group.resource_group_name
+#   network_security_group_id = module.network_security_group[0].network_security_group_id
+#   tags                      = local.additional_tags
+# }
+
+module "vpn" {
+  count                     = var.create_vpn ? 1 : 0
+  depends_on                = [module.vnet]
+  source                    = "./modules/vpn"
   name                      = var.name
   environment               = var.environment
   resource_group_location   = var.resource_group_location
   resource_group_name       = module.resource-group.resource_group_name
   network_security_group_id = module.network_security_group[0].network_security_group_id
   tags                      = local.additional_tags
+  subnet_id                 = slice(module.vnet[0].vnet_subnets, ((length(local.database_subnets))+(length(local.private_subnets))-1), (length(module.vnet[0].vnet_subnets)-1))
+  generate_admin_ssh_key = true
+  os_flavor = "linux"
 }

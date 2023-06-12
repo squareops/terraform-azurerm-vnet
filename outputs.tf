@@ -16,6 +16,11 @@ output "vnet_name" {
   value       = module.vnet[0].vnet_name
 }
 
+output "vnet_subnets" {
+  description = "The ids of subnets created inside the newly created vNet"
+  value       = module.vnet[0].vnet_subnets
+}
+
 output "vnet_subnets_name_id" {
   description = "Can be queried subnet-id by subnet name by using lookup(module.vnet.vnet_subnets_name_id, subnet1)"
   value       = module.vnet[0].vnet_subnets_name_id
@@ -52,6 +57,6 @@ output "nat_gateway_name" {
 }
 
 output "nat_gateway_public_ips" {
-  description = "Public IPs associated to Nat Gateway"
+  description = "Public IP associated wth the Nat Gateway"
   value       = module.nat_gateway[0].nat_gateway_public_ips
 }

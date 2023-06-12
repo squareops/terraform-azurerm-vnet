@@ -18,5 +18,6 @@ module "vnet" {
   zones                  = 2
   create_public_subnets  = true
   create_private_subnets = true
+  create_vpn             = true
   additional_tags        = local.additional_tags
 }
