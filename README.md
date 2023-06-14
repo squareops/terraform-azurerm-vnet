@@ -57,52 +57,102 @@ This module supports three scenarios to create Network resource on AWS. Each wil
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.11.0 |
 
+## Providers
+
+No providers.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_logging"></a> [logging](#module\_logging) | ./modules/logging | n/a |
+| <a name="module_nat_gateway"></a> [nat\_gateway](#module\_nat\_gateway) | ./modules/nat-gateway | n/a |
+| <a name="module_network_security_group"></a> [network\_security\_group](#module\_network\_security\_group) | Azure/network-security-group/azurerm | 4.1.0 |
+| <a name="module_resource-group"></a> [resource-group](#module\_resource-group) | ./modules/resource-group | n/a |
+| <a name="module_routetable_database"></a> [routetable\_database](#module\_routetable\_database) | ./modules/routetable | n/a |
+| <a name="module_routetable_private"></a> [routetable\_private](#module\_routetable\_private) | ./modules/routetable | n/a |
+| <a name="module_routetable_public"></a> [routetable\_public](#module\_routetable\_public) | ./modules/routetable | n/a |
+| <a name="module_vnet"></a> [vnet](#module\_vnet) | Azure/vnet/azurerm | 4.1.0 |
+| <a name="module_vpn"></a> [vpn](#module\_vpn) | ./modules/vpn | n/a |
+
+## Resources
+
+No resources.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_auto_assign_public_ip"></a> [auto\_assign\_public\_ip](#input\_auto\_assign\_public\_ip) | Specify true to indicate that instances launched into the subnet should be assigned a public IP address. | `bool` | `false` | no |
-| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | Number of Availability Zone to be used by VPC Subnets | `number` | `2` | no |
-| <a name="input_database_subnet_cidrs"></a> [database\_subnet\_cidrs](#input\_database\_subnet\_cidrs) | Database Tier subnet CIDRs to be created | `list(any)` | `[]` | no |
-| <a name="input_database_subnet_enabled"></a> [database\_subnet\_enabled](#input\_database\_subnet\_enabled) | Set true to enable database subnets | `bool` | `false` | no |
-| <a name="input_default_network_acl_ingress"></a> [default\_network\_acl\_ingress](#input\_default\_network\_acl\_ingress) | List of maps of ingress rules to set on the Default Network ACL | `list(map(string))` | <pre>[<br>  {<br>    "action": "deny",<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 22,<br>    "protocol": "tcp",<br>    "rule_no": 98,<br>    "to_port": 22<br>  },<br>  {<br>    "action": "deny",<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 3389,<br>    "protocol": "tcp",<br>    "rule_no": 99,<br>    "to_port": 3389<br>  },<br>  {<br>    "action": "allow",<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 0,<br>    "protocol": "-1",<br>    "rule_no": 100,<br>    "to_port": 0<br>  },<br>  {<br>    "action": "allow",<br>    "from_port": 0,<br>    "ipv6_cidr_block": "::/0",<br>    "protocol": "-1",<br>    "rule_no": 101,<br>    "to_port": 0<br>  }<br>]</pre> | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | Specify the environment indentifier for the VPC | `string` | `""` | no |
-| <a name="input_flow_log_cloudwatch_log_group_retention_in_days"></a> [flow\_log\_cloudwatch\_log\_group\_retention\_in\_days](#input\_flow\_log\_cloudwatch\_log\_group\_retention\_in\_days) | Specifies the number of days you want to retain log events in the specified log group for VPC flow logs. | `number` | `null` | no |
-| <a name="input_flow_log_enabled"></a> [flow\_log\_enabled](#input\_flow\_log\_enabled) | Whether or not to enable VPC Flow Logs | `bool` | `false` | no |
-| <a name="input_flow_log_max_aggregation_interval"></a> [flow\_log\_max\_aggregation\_interval](#input\_flow\_log\_max\_aggregation\_interval) | The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record. Valid Values: `60` seconds or `600` seconds. | `number` | `60` | no |
-| <a name="input_intra_subnet_cidrs"></a> [intra\_subnet\_cidrs](#input\_intra\_subnet\_cidrs) | A list of intra subnets CIDR to be created | `list(any)` | `[]` | no |
-| <a name="input_intra_subnet_enabled"></a> [intra\_subnet\_enabled](#input\_intra\_subnet\_enabled) | Set true to enable intra subnets | `bool` | `false` | no |
-| <a name="input_name"></a> [name](#input\_name) | Specify the name of the VPC | `string` | `""` | no |
-| <a name="input_one_nat_gateway_per_az"></a> [one\_nat\_gateway\_per\_az](#input\_one\_nat\_gateway\_per\_az) | Set to true if a NAT Gateway is required per availability zone for Private Subnet Tier | `bool` | `false` | no |
-| <a name="input_private_subnet_cidrs"></a> [private\_subnet\_cidrs](#input\_private\_subnet\_cidrs) | A list of private subnets CIDR to be created inside the VPC | `list(any)` | `[]` | no |
-| <a name="input_private_subnet_enabled"></a> [private\_subnet\_enabled](#input\_private\_subnet\_enabled) | Set true to enable private subnets | `bool` | `false` | no |
-| <a name="input_public_subnet_cidrs"></a> [public\_subnet\_cidrs](#input\_public\_subnet\_cidrs) | A list of public subnets CIDR to be created inside the VPC | `list(any)` | `[]` | no |
-| <a name="input_public_subnet_enabled"></a> [public\_subnet\_enabled](#input\_public\_subnet\_enabled) | Set true to enable public subnets | `bool` | `false` | no |
-| <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | The CIDR block of the VPC | `string` | `"10.0.0.0/16"` | no |
-| <a name="input_vpn_key_pair_name"></a> [vpn\_key\_pair\_name](#input\_vpn\_key\_pair\_name) | Specify the name of AWS Keypair to be used for VPN Server | `string` | `""` | no |
-| <a name="input_vpn_server_enabled"></a> [vpn\_server\_enabled](#input\_vpn\_server\_enabled) | Set to true if you want to deploy VPN Gateway resource and attach it to the VPC | `bool` | `false` | no |
-| <a name="input_vpn_server_instance_type"></a> [vpn\_server\_instance\_type](#input\_vpn\_server\_instance\_type) | EC2 instance Type for VPN Server, Only amd64 based instance type are supported eg. t2.medium, t3.micro, c5a.large etc. | `string` | `"t3a.small"` | no |
+| <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | The tags to associate with your network and subnets. | `map(string)` | <pre>{<br>  "tag1": "",<br>  "tag2": ""<br>}</pre> | no |
+| <a name="input_address_space"></a> [address\_space](#input\_address\_space) | The address space CIDR that is used by the VNet. | `string` | `"10.0.0.0/16"` | no |
+| <a name="input_address_subnets_database"></a> [address\_subnets\_database](#input\_address\_subnets\_database) | Database subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space. | `list(any)` | `[]` | no |
+| <a name="input_address_subnets_private"></a> [address\_subnets\_private](#input\_address\_subnets\_private) | Private subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space. | `list(any)` | `[]` | no |
+| <a name="input_address_subnets_public"></a> [address\_subnets\_public](#input\_address\_subnets\_public) | Public subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space. | `list(any)` | `[]` | no |
+| <a name="input_create_database_subnets"></a> [create\_database\_subnets](#input\_create\_database\_subnets) | Set to true to create database subnets | `bool` | `false` | no |
+| <a name="input_create_nat_gateway"></a> [create\_nat\_gateway](#input\_create\_nat\_gateway) | Set to true to create a NAT Gateway | `bool` | `false` | no |
+| <a name="input_create_network_security_group"></a> [create\_network\_security\_group](#input\_create\_network\_security\_group) | Set to true to create a network security group | `bool` | `true` | no |
+| <a name="input_create_private_subnets"></a> [create\_private\_subnets](#input\_create\_private\_subnets) | Set to true to create private subnets | `bool` | `true` | no |
+| <a name="input_create_public_ip"></a> [create\_public\_ip](#input\_create\_public\_ip) | Set to true to create a public IP for NAT Gateway | `bool` | `true` | no |
+| <a name="input_create_public_subnets"></a> [create\_public\_subnets](#input\_create\_public\_subnets) | Set to true to create public subnets | `bool` | `true` | no |
+| <a name="input_create_resource_group"></a> [create\_resource\_group](#input\_create\_resource\_group) | To create a new resource group. Value in existing\_resource\_group will be ignored if this is true. | `bool` | `true` | no |
+| <a name="input_create_vnet"></a> [create\_vnet](#input\_create\_vnet) | Controls if VNet should be created (it affects all resources) | `bool` | `true` | no |
+| <a name="input_create_vpn"></a> [create\_vpn](#input\_create\_vpn) | Set to true to create a VPN which is configured with Printul Server and deployed in public subnet | `bool` | `false` | no |
+| <a name="input_custom_nsg_rules"></a> [custom\_nsg\_rules](#input\_custom\_nsg\_rules) | Rules for Network Security Group | `list(any)` | `[]` | no |
+| <a name="input_disable_bgp_route_propagation_database"></a> [disable\_bgp\_route\_propagation\_database](#input\_disable\_bgp\_route\_propagation\_database) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
+| <a name="input_disable_bgp_route_propagation_private"></a> [disable\_bgp\_route\_propagation\_private](#input\_disable\_bgp\_route\_propagation\_private) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
+| <a name="input_disable_bgp_route_propagation_public"></a> [disable\_bgp\_route\_propagation\_public](#input\_disable\_bgp\_route\_propagation\_public) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
+| <a name="input_enable_logging"></a> [enable\_logging](#input\_enable\_logging) | To enable Logging for VNET | `string` | `false` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | # GENERAL VARIABLES | `string` | `"test"` | no |
+| <a name="input_existing_resource_group_name"></a> [existing\_resource\_group\_name](#input\_existing\_resource\_group\_name) | Name of existing resource group that has to be used. Leave empty if new resource group has to be created. | `string` | `""` | no |
+| <a name="input_generate_admin_ssh_key"></a> [generate\_admin\_ssh\_key](#input\_generate\_admin\_ssh\_key) | Set to true generate a SSH Key for VPN Server | `bool` | `true` | no |
+| <a name="input_linux_distribution_name"></a> [linux\_distribution\_name](#input\_linux\_distribution\_name) | Variable to pick an OS flavour for Linux based VM. Possible values include: ubuntu1604, ubuntu1804, ubuntu1904, ubuntu2004, ubuntu2004-gen2,centos77, centos78-gen2, centos79-gen2, centos81, centos81-gen2, centos82-gen2, centos83-gen2,centos84-gen2 | `string` | `"ubuntu2004"` | no |
+| <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"skaf"` | no |
+| <a name="input_nat_gateway_idle_timeout"></a> [nat\_gateway\_idle\_timeout](#input\_nat\_gateway\_idle\_timeout) | Idle timeout configuration in minutes for Nat Gateway | `number` | `4` | no |
+| <a name="input_os_flavor"></a> [os\_flavor](#input\_os\_flavor) | OS Flavor of the VPN Server. Set to linux always | `string` | `"linux"` | no |
+| <a name="input_public_ip_availability_zone_vpn"></a> [public\_ip\_availability\_zone\_vpn](#input\_public\_ip\_availability\_zone\_vpn) | The availability zone to allocate the Public IP in. Possible values are `Zone-Redundant`, `1`,`2`, `3`, and `No-Zone` | `list(any)` | `[]` | no |
+| <a name="input_public_ip_domain_name_label"></a> [public\_ip\_domain\_name\_label](#input\_public\_ip\_domain\_name\_label) | DNS domain label for NAT Gateway public IP. | `string` | `null` | no |
+| <a name="input_public_ip_ids"></a> [public\_ip\_ids](#input\_public\_ip\_ids) | List of public ips to use in case a public IP for NAT Gateway is not being created. | `list(string)` | `[]` | no |
+| <a name="input_public_ip_reverse_fqdn"></a> [public\_ip\_reverse\_fqdn](#input\_public\_ip\_reverse\_fqdn) | Reverse FQDN for NAT Gateway public IP. | `string` | `null` | no |
+| <a name="input_public_ip_zones"></a> [public\_ip\_zones](#input\_public\_ip\_zones) | Public ip Zones to configure for NAT Gateway. | `list(string)` | <pre>[<br>  "1",<br>  "2"<br>]</pre> | no |
+| <a name="input_resource_group_location"></a> [resource\_group\_location](#input\_resource\_group\_location) | Region od deployment | `string` | `"eastus"` | no |
+| <a name="input_route_names_database"></a> [route\_names\_database](#input\_route\_names\_database) | A list of database subnets inside the vNet. | `list` | `[]` | no |
+| <a name="input_route_names_private"></a> [route\_names\_private](#input\_route\_names\_private) | A list of public subnets inside the vNet. | `list` | `[]` | no |
+| <a name="input_route_names_public"></a> [route\_names\_public](#input\_route\_names\_public) | A list of public subnets inside the vNet. | `list` | `[]` | no |
+| <a name="input_route_nexthop_types_database"></a> [route\_nexthop\_types\_database](#input\_route\_nexthop\_types\_database) | The type of Azure hop the packet should be sent to for each corresponding route.Valid values are 'VirtualNetworkGateway', 'VnetLocal', 'Internet', 'HyperNetGateway', 'None' | `list` | `[]` | no |
+| <a name="input_route_nexthop_types_private"></a> [route\_nexthop\_types\_private](#input\_route\_nexthop\_types\_private) | The type of Azure hop the packet should be sent to for each corresponding route.Valid values are 'VirtualNetworkGateway', 'VnetLocal', 'Internet', 'HyperNetGateway', 'None' | `list` | `[]` | no |
+| <a name="input_route_nexthop_types_public"></a> [route\_nexthop\_types\_public](#input\_route\_nexthop\_types\_public) | The type of Azure hop the packet should be sent to for each corresponding route.Valid values are 'VirtualNetworkGateway', 'VnetLocal', 'Internet', 'HyperNetGateway', 'None' | `list` | `[]` | no |
+| <a name="input_route_prefixes_database"></a> [route\_prefixes\_database](#input\_route\_prefixes\_database) | The list of address prefixes to use for each route. | `list` | `[]` | no |
+| <a name="input_route_prefixes_private"></a> [route\_prefixes\_private](#input\_route\_prefixes\_private) | The list of address prefixes to use for each route. | `list` | `[]` | no |
+| <a name="input_route_prefixes_public"></a> [route\_prefixes\_public](#input\_route\_prefixes\_public) | The list of address prefixes to use for each route. | `list` | `[]` | no |
+| <a name="input_source_address_prefix"></a> [source\_address\_prefix](#input\_source\_address\_prefix) | n/a | `list(string)` | `[]` | no |
+| <a name="input_subnet_names_database"></a> [subnet\_names\_database](#input\_subnet\_names\_database) | Name of the database subnets. If left empty, it is created automatically using name and environment variables. | `list(any)` | `[]` | no |
+| <a name="input_subnet_names_private"></a> [subnet\_names\_private](#input\_subnet\_names\_private) | Name of the private subnets. If left empty, it is created automatically using name and environment variables. | `list(any)` | `[]` | no |
+| <a name="input_subnet_names_public"></a> [subnet\_names\_public](#input\_subnet\_names\_public) | Name of the public subnets. If left empty, it is created automatically using name and environment variables. | `list(any)` | `[]` | no |
+| <a name="input_virtual_machine_size"></a> [virtual\_machine\_size](#input\_virtual\_machine\_size) | The Virtual Machine SKU for the Virtual Machine, Default is Standard\_A2\_V2 | `string` | `"Standard_A2_v2"` | no |
+| <a name="input_vpn_nsg_rules"></a> [vpn\_nsg\_rules](#input\_vpn\_nsg\_rules) | Rules to be added to the Network Security Group for the VPN Server | `list(any)` | <pre>[<br>  {<br>    "access": "Allow",<br>    "destination_port_range": "22",<br>    "direction": "Inbound",<br>    "name": "VPNSSHInboundRule",<br>    "priority": 1001,<br>    "protocol": "*",<br>    "source_address_prefix": "*",<br>    "source_port_range": "*"<br>  }<br>]</pre> | no |
+| <a name="input_zones"></a> [zones](#input\_zones) | Number of Availability Zone to be used by VNet | `number` | `3` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\resource\_group\_name) | Resource group name |
-| <a name="output_resource_group_location"></a> [resource\_group\_location](#output\resource\_group\_location) | Resource group location |
-| <a name="output_vnet_id"></a> [vnet\_id](#output\vnet\_id) | The ID of the VNet |
-| <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | Name of the VNet |
-| <a name="output_vnet_subnets"></a> [vnet\_subnets](#output\_vnet\_subnets) | IDs of the subnets |
-| <a name="output_vnet_subnets_name_id"></a> [vnet\_subnets\_name\_id](#output\_vnet\_subnets\_name\_id) | Name and ID mapping of the subnets |
-| <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | The ID of newly created network security group |
-| <a name="output_route_table_id_database"></a> [route\_table\_id\_database](#output\_route\_table\_id\_database) | The ID of the newly created Route Table for Database Subnets |
-| <a name="output_route_table_id_private"></a> [route\_table\_id\_private](#output\_route\_table\_id\_private) | The ID of the newly created Route Table for Private Subnets |
-| <a name="output_route_table_id_public"></a> [route\_table\_id\_public](#output\_route\_table\_id\_public) | The ID of the newly created Route Table for Public Subnets |
-| <a name="output_nat_gateway_id"></a> [nat\_gateway\_id](#output\_gateway\_id) | The ID of the newly created NAT gateway |
-| <a name="output_nat_gateway_name"></a> [nat\_gateway\_name](#output\_nat\_gateway\_name) | Name of the NAT Gateway |
+| <a name="output_database_subnets"></a> [database\_subnets](#output\_database\_subnets) | Database subnet IDs |
+| <a name="output_nat_gateway_id"></a> [nat\_gateway\_id](#output\_nat\_gateway\_id) | Nat Gateway Id |
+| <a name="output_nat_gateway_name"></a> [nat\_gateway\_name](#output\_nat\_gateway\_name) | Nat gateway Name |
 | <a name="output_nat_gateway_public_ips"></a> [nat\_gateway\_public\_ips](#output\_nat\_gateway\_public\_ips) | Public IP associated wth the Nat Gateway |
+| <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | The id of newly created network security group |
+| <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Database subnet IDs |
+| <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | Database subnet IDs |
+| <a name="output_resource_group_location"></a> [resource\_group\_location](#output\_resource\_group\_location) | Resource Group Name Location |
+| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | Resource Group Name |
+| <a name="output_route_table_id_database"></a> [route\_table\_id\_database](#output\_route\_table\_id\_database) | The id of the newly created Route Table for Databases |
+| <a name="output_route_table_id_private"></a> [route\_table\_id\_private](#output\_route\_table\_id\_private) | The id of the newly created Route Table |
+| <a name="output_route_table_id_public"></a> [route\_table\_id\_public](#output\_route\_table\_id\_public) | The id of the newly created Route Table |
+| <a name="output_vnet_id"></a> [vnet\_id](#output\_vnet\_id) | n/a |
+| <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | The Name of the newly created vNet |
+| <a name="output_vnet_subnets_name_id"></a> [vnet\_subnets\_name\_id](#output\_vnet\_subnets\_name\_id) | Can be queried subnet-id by subnet name by using lookup(module.vnet.vnet\_subnets\_name\_id, subnet1) |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Contribute & Issue Report

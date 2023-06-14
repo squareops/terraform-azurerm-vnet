@@ -21,6 +21,12 @@ resource "tls_private_key" "rsa" {
   rsa_bits  = 4096
 }
 
+resource "local_file" "private_key" {
+  content         = tls_private_key.rsa[0].private_key_pem
+  filename        = format("%s-%s-vpn-private-key.pem",var.environment,var.name)
+  file_permission = "0600"
+}
+
 resource "random_password" "passwd" {
   count       = (var.os_flavor == "linux" && var.disable_password_authentication == false && var.admin_password == null ? 1 : (var.os_flavor == "windows" && var.admin_password == null ? 1 : 0))
   length      = var.random_password_length
