@@ -44,12 +44,22 @@ Users need to declare `address_space` and subnets are calculated with the help o
 This module supports three scenarios to create Network resource on AWS. Each will be explained in brief in the corresponding sections.
 
 - **simple-vnet (default behavior):** To create a VNet with public subnets and Internet Route Hop.
-  - `create_vnet       = "true"`
+  - `create_vnet       = true`
   - `create_public_subnets = true`
-- **vnet-with-private-sub:** To create a VNet with public subnets, private subnets, Internet Route Hop and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
-  - `create_vnet       = "true"`
+- **vnet-with-private-subnet:** To create a VNet with public subnets, private subnets, Internet Route Hop and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
+  - `create_vnet       = true`
   - `create_public_subnets = true`
   - `create_public_subnets = true`
+  - `create_nat_gateway = true`
+  - `create_vpn        = true`
+- **vnet-with-logging:** To create a VNet with public subnets, private subnets, database subnets, VPN, logging and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
+  - `create_vnet             = true`
+  - `create_public_subnets   = true`
+  - `create_private_subnets  = true`
+  - `create_database_subnets = true`
+  - `create_nat_gateway      = true`
+  - `enable_logging          = true`
+  - `create_vpn              = true`
 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -19,5 +19,6 @@ module "vnet" {
   create_public_subnets  = true
   create_private_subnets = true
   create_vpn             = true
+  create_nat_gateway     = true
   additional_tags        = local.additional_tags
 }

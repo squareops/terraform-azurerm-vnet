@@ -23,5 +23,6 @@ module "vnet" {
   create_database_subnets = true
   create_nat_gateway      = true
   enable_logging          = true
+  create_vpn              = true
   additional_tags         = local.additional_tags
 }
