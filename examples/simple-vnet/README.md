@@ -2,7 +2,7 @@
 
 This configuration is suitable for for development environment.
 
-Public subnets along with Route Tables and Network Security Group will be created in specified availability zones. 
+This configuration creates a new Resource Group and Public subnets along with Route Tables and Network Security Group will be created in specified availability zones. 
 
 ## Usage
 

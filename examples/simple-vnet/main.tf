@@ -16,6 +16,7 @@ module "vnet" {
   address_space         = local.address_space
   environment           = local.environment
   zones                 = 2
+  create_resource_group = true
   create_public_subnets = true
   additional_tags       = local.additional_tags
 }

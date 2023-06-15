@@ -1,7 +1,7 @@
 # VNet with Private Subnets
 
 
-A public and private subnet will be created per availability zone in addition to single NAT Gateway shared between all availability zones.
+A public and private subnet will be created per availability zone in addition to single NAT Gateway shared between all availability zones. This example shows how to use an existing resource group.
 
 ## Usage
 
