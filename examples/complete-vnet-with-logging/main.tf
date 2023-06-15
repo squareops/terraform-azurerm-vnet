@@ -1,5 +1,5 @@
 locals {
-  region      = "eastus"
+  location      = "eastus"
   environment = "dev"
   name        = "skaf"
   additional_tags = {
@@ -18,6 +18,7 @@ module "vnet" {
   environment             = "production"
   zones                   = 2
   create_vnet             = true
+  resource_group_location      = local.location
   create_public_subnets   = true
   create_private_subnets  = true
   create_database_subnets = true

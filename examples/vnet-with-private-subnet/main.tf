@@ -1,6 +1,6 @@
 locals {
   name        = "skaf"
-  region      = "eastus"
+  location      = "eastus"
   environment = "stage"
   additional_tags = {
     Owner      = "SquareOps"
@@ -17,6 +17,7 @@ module "vnet" {
   environment                  = local.environment
   zones                        = 2
   create_resource_group        = false
+  resource_group_location      = local.location
   existing_resource_group_name = "example"
   create_public_subnets        = true
   create_private_subnets       = true
