@@ -88,5 +88,5 @@ output "nat_gateway_public_ips" {
 
 output "VPN_Public_IP" {
   description = "Public IP for the VPN Server"
-  value       = module.vpn[0].vpn_public_ip
+  value       = var.create_vpn ? module.vpn[0].vpn_public_ip : null
 }

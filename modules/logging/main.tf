@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "network_log_data" {
 }
 
 resource "azurerm_log_analytics_workspace" "traffic_analytics" {
-  name                = format("%s-%s-analytics-workspace-%s", var.environment, var.name, var.resource_group_location)
+  name                = format("%s-%s-analytics-workspace", var.environment, var.name)
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   retention_in_days   = 90
