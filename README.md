@@ -1,4 +1,4 @@
-# AWS Network Terraform module
+# Azure Virtual Network Terraform module
 
 ![squareops_avatar]
 
@@ -41,7 +41,7 @@ To prevent destruction interruptions, any resources that have been created outsi
 
 Users need to declare `address_space` and subnets are calculated with the help of in-built functions.
 
-This module supports three scenarios to create Network resource on AWS. Each will be explained in brief in the corresponding sections.
+This module supports three scenarios to create Virtual Network resources on Azure. Each will be explained in brief in the corresponding sections.
 
 - **simple-vnet (default behavior):** To create a VNet with public subnets and Internet Route Hop.
   - `create_vnet       = true`
