@@ -203,7 +203,7 @@ variable "nat_gateway_idle_timeout" {
 variable "enable_logging" {
   description = "To enable Logging for VNET"
   type        = string
-  default     = false
+  default     = true
 }
 
 ## VPN VARIABLES

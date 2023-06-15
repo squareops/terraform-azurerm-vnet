@@ -108,12 +108,12 @@ No resources.
 | <a name="input_create_public_subnets"></a> [create\_public\_subnets](#input\_create\_public\_subnets) | Set to true to create public subnets | `bool` | `true` | no |
 | <a name="input_create_resource_group"></a> [create\_resource\_group](#input\_create\_resource\_group) | To create a new resource group. Value in existing\_resource\_group will be ignored if this is true. | `bool` | `true` | no |
 | <a name="input_create_vnet"></a> [create\_vnet](#input\_create\_vnet) | Controls if VNet should be created (it affects all resources) | `bool` | `true` | no |
-| <a name="input_create_vpn"></a> [create\_vpn](#input\_create\_vpn) | Set to true to create a VPN which is configured with Printul Server and deployed in public subnet | `bool` | `false` | no |
+| <a name="input_create_vpn"></a> [create\_vpn](#input\_create\_vpn) | Set to true to create a VPN which is configured with Printul Server and deployed in public subnet | `bool` | `true` | no |
 | <a name="input_custom_nsg_rules"></a> [custom\_nsg\_rules](#input\_custom\_nsg\_rules) | Rules for Network Security Group | `list(any)` | `[]` | no |
 | <a name="input_disable_bgp_route_propagation_database"></a> [disable\_bgp\_route\_propagation\_database](#input\_disable\_bgp\_route\_propagation\_database) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
 | <a name="input_disable_bgp_route_propagation_private"></a> [disable\_bgp\_route\_propagation\_private](#input\_disable\_bgp\_route\_propagation\_private) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
 | <a name="input_disable_bgp_route_propagation_public"></a> [disable\_bgp\_route\_propagation\_public](#input\_disable\_bgp\_route\_propagation\_public) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
-| <a name="input_enable_logging"></a> [enable\_logging](#input\_enable\_logging) | To enable Logging for VNET | `string` | `false` | no |
+| <a name="input_enable_logging"></a> [enable\_logging](#input\_enable\_logging) | To enable Logging for VNET | `string` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | # GENERAL VARIABLES | `string` | `"test"` | no |
 | <a name="input_existing_resource_group_name"></a> [existing\_resource\_group\_name](#input\_existing\_resource\_group\_name) | Name of existing resource group that has to be used. Leave empty if new resource group has to be created. | `string` | `""` | no |
 | <a name="input_generate_admin_ssh_key"></a> [generate\_admin\_ssh\_key](#input\_generate\_admin\_ssh\_key) | Set to true generate a SSH Key for VPN Server | `bool` | `true` | no |
@@ -148,13 +148,17 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_VPN_Public_IP"></a> [VPN\_Public\_IP](#output\_VPN\_Public\_IP) | Public IP for the VPN Server |
 | <a name="output_database_subnets"></a> [database\_subnets](#output\_database\_subnets) | Database subnet IDs |
+| <a name="output_database_subnets_cidr"></a> [database\_subnets\_cidr](#output\_database\_subnets\_cidr) | Database subnet CIDRs |
 | <a name="output_nat_gateway_id"></a> [nat\_gateway\_id](#output\_nat\_gateway\_id) | Nat Gateway Id |
 | <a name="output_nat_gateway_name"></a> [nat\_gateway\_name](#output\_nat\_gateway\_name) | Nat gateway Name |
 | <a name="output_nat_gateway_public_ips"></a> [nat\_gateway\_public\_ips](#output\_nat\_gateway\_public\_ips) | Public IP associated wth the Nat Gateway |
 | <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | The id of newly created network security group |
 | <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | Database subnet IDs |
+| <a name="output_private_subnets_cidr"></a> [private\_subnets\_cidr](#output\_private\_subnets\_cidr) | Private subnet CIDRs |
 | <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | Database subnet IDs |
+| <a name="output_public_subnets_cidr"></a> [public\_subnets\_cidr](#output\_public\_subnets\_cidr) | Public subnet CIDRs |
 | <a name="output_resource_group_location"></a> [resource\_group\_location](#output\_resource\_group\_location) | Resource Group Name Location |
 | <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | Resource Group Name |
 | <a name="output_route_table_id_database"></a> [route\_table\_id\_database](#output\_route\_table\_id\_database) | The id of the newly created Route Table for Databases |
