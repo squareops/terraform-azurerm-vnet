@@ -52,7 +52,7 @@ This module supports three scenarios to create Network resource on AWS. Each wil
   - `create_public_subnets = true`
   - `create_nat_gateway = true`
   - `create_vpn        = true`
-- **vnet-with-logging:** To create a VNet with public subnets, private subnets, database subnets, VPN, logging and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
+- **complete-vnet-logging:** To create a VNet with public subnets, private subnets, database subnets, VPN, logging and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
   - `create_vnet             = true`
   - `create_public_subnets   = true`
   - `create_private_subnets  = true`
