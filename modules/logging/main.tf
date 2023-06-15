@@ -22,14 +22,14 @@ resource "azurerm_log_analytics_workspace" "traffic_analytics" {
 # There can only be one Network Watcher per subscription and region
 
 resource "azurerm_network_watcher" "app1_traffic" {
-  name                = format("%s-%s-network-watcher-%s", var.environment, var.name, var.resource_group_location)
+  name                = format("%s-%s-network-watcher", var.environment, var.name)
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   tags                = var.tags
 }
 
 resource "azurerm_network_watcher_flow_log" "app1_network_logs" {
-  name                 = format("%s-%s-network-watcher-flow-log-%s", var.environment, var.name, var.resource_group_location)
+  name                 = format("%s-%s-network-watcher-flow-log", var.environment, var.name)
   network_watcher_name = azurerm_network_watcher.app1_traffic.name
   resource_group_name  = azurerm_network_watcher.app1_traffic.resource_group_name
 
