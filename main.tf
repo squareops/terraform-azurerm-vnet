@@ -26,7 +26,7 @@ module "vnet" {
   )
   nsg_ids = merge(
     (var.create_public_subnets ? (length(local.subnet_names_public) > 0 ? { for subnet_name in local.subnet_names_public : subnet_name => "${module.network_security_group[0].network_security_group_id}" } : null) : null),
-    (var.create_private_subnets ? (length(local.subnet_names_private) > 0 ? { for subnet_name in local.subnet_names_private : subnet_name => "${module.network_security_group[0].network_security_group_id}" } : null) : null),
+    # (var.create_private_subnets ? (length(local.subnet_names_private) > 0 ? { for subnet_name in local.subnet_names_private : subnet_name => "${module.network_security_group[0].network_security_group_id}" } : null) : null),
     (var.create_database_subnets ? (length(local.subnet_names_database) > 0 ? { for subnet_name in local.subnet_names_database : subnet_name => "${module.network_security_group[0].network_security_group_id}" } : null) : null)
   )
   tags = local.additional_tags
