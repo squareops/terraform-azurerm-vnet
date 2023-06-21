@@ -13,17 +13,18 @@ locals {
 
 module "vnet" {
   source                  = "../../"
-  name                    = "skaf"
-  address_space           = "10.0.0.0/16"
-  environment             = "production"
-  zones                   = 2
+  name                    = local.name
+  address_space           = local.address_space
+  environment             = local.name
+  zones                   = 3
   create_vnet             = true
-  resource_group_location      = local.location
+  create_resource_group   = true
+  resource_group_location = local.location
   create_public_subnets   = true
   create_private_subnets  = true
-  create_database_subnets = true
-  create_nat_gateway      = true
-  enable_logging          = true
-  create_vpn              = true
+  create_database_subnets = false
+  create_nat_gateway      = false
+  enable_logging          = false
+  create_vpn              = false
   additional_tags         = local.additional_tags
 }
