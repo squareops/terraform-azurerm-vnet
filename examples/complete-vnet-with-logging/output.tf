@@ -21,14 +21,14 @@ output "vnet_subnets_name_id" {
   value       = module.vnet.vnet_subnets_name_id
 }
 
-output "db" {
+output "database_subnets" {
   value = module.vnet.database_subnets
 }
 
-output "priv" {
+output "private_subnets" {
   value = module.vnet.private_subnets
 }
 
-output "pub" {
+output "public_subnets" {
   value = module.vnet.public_subnets
 }

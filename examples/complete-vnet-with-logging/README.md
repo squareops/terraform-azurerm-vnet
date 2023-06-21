@@ -45,6 +45,9 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_database_subnets"></a> [database\_subnets](#output\_database\_subnets) | n/a |
+| <a name="output_private_subnets"></a> [private\_subnets](#output\_private\_subnets) | n/a |
+| <a name="output_public_subnets"></a> [public\_subnets](#output\_public\_subnets) | n/a |
 | <a name="output_resource_group_location"></a> [resource\_group\_location](#output\_resource\_group\_location) | Resource Group Name Location |
 | <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | Resource Group Name |
 | <a name="output_vnet_id"></a> [vnet\_id](#output\_vnet\_id) | n/a |
