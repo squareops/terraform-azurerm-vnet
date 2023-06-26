@@ -176,7 +176,7 @@ variable "create_public_ip" {
 variable "public_ip_zones" {
   description = "Public ip Zones to configure for NAT Gateway."
   type        = list(string)
-  default     = ["1", "2"]
+  default     = null
 }
 variable "public_ip_ids" {
   description = "List of public ips to use in case a public IP for NAT Gateway is not being created."
