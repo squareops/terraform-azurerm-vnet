@@ -1,7 +1,7 @@
 locals {
-  public_subnets               = var.create_public_subnets ? length(var.address_subnets_public) > 0 ? var.address_subnets_public : [for netnum in range(0, var.zones) : cidrsubnet(var.address_space, 8, netnum)] : []
-  private_subnets              = var.create_private_subnets ? length(var.address_subnets_private) > 0 ? var.address_subnets_private : [for netnum in range(var.zones, var.zones * 2) : cidrsubnet(var.address_space, 4, netnum)] : []
-  database_subnets             = var.create_database_subnets ? length(var.address_subnets_database) > 0 ? var.address_subnets_database : [for netnum in range(var.zones * 2, var.zones * 3) : cidrsubnet(var.address_space, 8, netnum)] : []
+  public_subnets               = var.create_public_subnets ? length(var.address_subnets_public) > 0 ? var.address_subnets_public : [for netnum in range(0, var.num_public_subnets) : cidrsubnet(var.address_space, 8, netnum)] : []
+  private_subnets              = var.create_private_subnets ? length(var.address_subnets_private) > 0 ? var.address_subnets_private : [for netnum in range(var.num_private_subnets, var.num_private_subnets * 2) : cidrsubnet(var.address_space, 4, netnum)] : []
+  database_subnets             = var.create_database_subnets ? length(var.address_subnets_database) > 0 ? var.address_subnets_database : [for netnum in range(var.num_database_subnets * 2, var.num_database_subnets * 3) : cidrsubnet(var.address_space, 8, netnum)] : []
   route_prefixes_public        = var.create_public_subnets ? length(var.route_prefixes_public) > 0 ? var.route_prefixes_public : [var.address_space, "0.0.0.0/0"] : []
   route_names_public           = var.create_public_subnets ? length(var.route_names_public) > 0 ? var.route_names_public : ["Vnet", "Internet"] : []
   route_nexthop_types_public   = var.create_public_subnets ? length(var.route_nexthop_types_public) > 0 ? var.route_nexthop_types_public : ["VnetLocal", "Internet"] : []

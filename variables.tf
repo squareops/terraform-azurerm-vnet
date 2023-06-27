@@ -22,11 +22,6 @@ variable "resource_group_location" {
   default     = "eastus" ## inserted value
   type        = string
 }
-variable "zones" {
-  description = "Number of Availability Zone to be used by VNet"
-  default     = 3
-  type        = number
-}
 variable "additional_tags" {
   description = "The tags to associate with your network and subnets."
   type        = map(string)
@@ -63,8 +58,13 @@ variable "create_public_subnets" {
   type        = bool
   default     = true
 }
+variable "num_public_subnets" {
+  description = "Number of Public Subnets to be created by the VNet"
+  default     = 1
+  type        = number
+}
 variable "address_subnets_public" {
-  description = "Public subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space."
+  description = "Public subnet CIDRs. If left empty, it is calculated automatically using num_public_subnets and VNet address space."
   default     = []
   type        = list(any)
 }
@@ -78,8 +78,13 @@ variable "create_private_subnets" {
   type        = bool
   default     = true
 }
+variable "num_private_subnets" {
+  description = "Number of private Subnets to be created by the VNet (Set " 
+  default     = 1
+  type        = number
+}
 variable "address_subnets_private" {
-  description = "Private subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space."
+  description = "Private subnet CIDRs. If left empty, it is calculated automatically using num_private_subnets and VNet address space."
   default     = []
   type        = list(any)
 }
@@ -93,8 +98,13 @@ variable "create_database_subnets" {
   type        = bool
   default     = false
 }
+variable "num_database_subnets" {
+  description = "Number of Database Subnets to be created by the VNet"
+  default     = 1
+  type        = number
+}
 variable "address_subnets_database" {
-  description = "Database subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space."
+  description = "Database subnet CIDRs. If left empty, it is calculated automatically using num_database_subnets and VNet address space."
   default     = []
   type        = list(any)
 }

@@ -11,13 +11,13 @@ locals {
 }
 
 module "vnet" {
-  source                  = "../../"
+  source                  = "git::https://github.com/anoushkaakhourysq/terraform-azure-vnet.git?ref=release/v1"
   name                    = local.name
   address_space           = local.address_space
   environment             = local.environment
-  zones                   = 2
   create_resource_group   = true
   resource_group_location = local.location
   create_public_subnets   = true
+  num_public_subnets      = 1
   additional_tags         = local.additional_tags
 }

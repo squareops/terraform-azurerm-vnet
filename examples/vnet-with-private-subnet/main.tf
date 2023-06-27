@@ -1,6 +1,6 @@
 locals {
   name        = "skaf"
-  location      = "eastus"
+  location    = "eastus"
   environment = "stage"
   additional_tags = {
     Owner      = "SquareOps"
@@ -11,16 +11,17 @@ locals {
 }
 
 module "vnet" {
-  source                       = "../../"
+  source                       = "git::https://github.com/anoushkaakhourysq/terraform-azure-vnet.git?ref=release/v1"
   name                         = local.name
   address_space                = local.address_space
   environment                  = local.environment
-  zones                        = 2
   create_resource_group        = false
   resource_group_location      = local.location
   existing_resource_group_name = "example"
   create_public_subnets        = true
+  num_public_subnets           = 1
   create_private_subnets       = true
+  num_private_subnets          = 1
   create_vpn                   = true
   create_nat_gateway           = true
   additional_tags              = local.additional_tags
