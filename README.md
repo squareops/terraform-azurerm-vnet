@@ -46,17 +46,23 @@ This module supports three scenarios to create Virtual Network resources on Azur
 - **simple-vnet (default behavior):** To create a VNet with public subnets and Internet Route Hop.
   - `create_vnet       = true`
   - `create_public_subnets = true`
+  - `num_public_subnets    = true`
 - **vnet-with-private-subnet:** To create a VNet with public subnets, private subnets, Internet Route Hop and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
   - `create_vnet       = true`
   - `create_public_subnets = true`
-  - `create_public_subnets = true`
+  - `num_public_subnets    = true`
+  - `create_private_subnets = true`
+  - `num_private_subnets    = true`
   - `create_nat_gateway = true`
   - `create_vpn        = true`
 - **complete-vnet-logging:** To create a VNet with public subnets, private subnets, database subnets, VPN, logging and NAT gateway. Database and Private, whichever subnets are enabled, are associated with the NAT gateway.
   - `create_vnet             = true`
   - `create_public_subnets   = true`
+  - `num_public_subnets    = true`
   - `create_private_subnets  = true`
+  - `num_private_subnets    = true`
   - `create_database_subnets = true`
+  - `num_database_subnets    = true`
   - `create_nat_gateway      = true`
   - `enable_logging          = true`
   - `create_vpn              = true`
@@ -97,9 +103,9 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | The tags to associate with your network and subnets. | `map(string)` | <pre>{<br>  "tag1": "",<br>  "tag2": ""<br>}</pre> | no |
 | <a name="input_address_space"></a> [address\_space](#input\_address\_space) | The address space CIDR that is used by the VNet. | `string` | `"10.0.0.0/16"` | no |
-| <a name="input_address_subnets_database"></a> [address\_subnets\_database](#input\_address\_subnets\_database) | Database subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space. | `list(any)` | `[]` | no |
-| <a name="input_address_subnets_private"></a> [address\_subnets\_private](#input\_address\_subnets\_private) | Private subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space. | `list(any)` | `[]` | no |
-| <a name="input_address_subnets_public"></a> [address\_subnets\_public](#input\_address\_subnets\_public) | Public subnet CIDRs. If left empty, it is calculated automatically using zones and VNet address space. | `list(any)` | `[]` | no |
+| <a name="input_address_subnets_database"></a> [address\_subnets\_database](#input\_address\_subnets\_database) | Database subnet CIDRs. If left empty, it is calculated automatically using num\_database\_subnets and VNet address space. | `list(any)` | `[]` | no |
+| <a name="input_address_subnets_private"></a> [address\_subnets\_private](#input\_address\_subnets\_private) | Private subnet CIDRs. If left empty, it is calculated automatically using num\_private\_subnets and VNet address space. | `list(any)` | `[]` | no |
+| <a name="input_address_subnets_public"></a> [address\_subnets\_public](#input\_address\_subnets\_public) | Public subnet CIDRs. If left empty, it is calculated automatically using num\_public\_subnets and VNet address space. | `list(any)` | `[]` | no |
 | <a name="input_create_database_subnets"></a> [create\_database\_subnets](#input\_create\_database\_subnets) | Set to true to create database subnets | `bool` | `false` | no |
 | <a name="input_create_nat_gateway"></a> [create\_nat\_gateway](#input\_create\_nat\_gateway) | Set to true to create a NAT Gateway | `bool` | `false` | no |
 | <a name="input_create_network_security_group"></a> [create\_network\_security\_group](#input\_create\_network\_security\_group) | Set to true to create a network security group | `bool` | `true` | no |
@@ -110,6 +116,7 @@ No resources.
 | <a name="input_create_vnet"></a> [create\_vnet](#input\_create\_vnet) | Controls if VNet should be created (it affects all resources) | `bool` | `true` | no |
 | <a name="input_create_vpn"></a> [create\_vpn](#input\_create\_vpn) | Set to true to create a VPN which is configured with Printul Server and deployed in public subnet | `bool` | `true` | no |
 | <a name="input_custom_nsg_rules"></a> [custom\_nsg\_rules](#input\_custom\_nsg\_rules) | Rules for Network Security Group | `list(any)` | `[]` | no |
+| <a name="input_ddos_protection_plan"></a> [ddos\_protection\_plan](#input\_ddos\_protection\_plan) | The set of DDoS protection plan configuration | <pre>object({<br>    enable = bool<br>    id     = string<br>  })</pre> | `null` | no |
 | <a name="input_disable_bgp_route_propagation_database"></a> [disable\_bgp\_route\_propagation\_database](#input\_disable\_bgp\_route\_propagation\_database) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
 | <a name="input_disable_bgp_route_propagation_private"></a> [disable\_bgp\_route\_propagation\_private](#input\_disable\_bgp\_route\_propagation\_private) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
 | <a name="input_disable_bgp_route_propagation_public"></a> [disable\_bgp\_route\_propagation\_public](#input\_disable\_bgp\_route\_propagation\_public) | Boolean flag which controls propagation of routes learned by BGP on that route table. True means disable. | `string` | `"true"` | no |
@@ -120,12 +127,15 @@ No resources.
 | <a name="input_linux_distribution_name"></a> [linux\_distribution\_name](#input\_linux\_distribution\_name) | Variable to pick an OS flavour for Linux based VM. Possible values include: ubuntu1604, ubuntu1804, ubuntu1904, ubuntu2004, ubuntu2004-gen2,centos77, centos78-gen2, centos79-gen2, centos81, centos81-gen2, centos82-gen2, centos83-gen2,centos84-gen2 | `string` | `"ubuntu2004"` | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"skaf"` | no |
 | <a name="input_nat_gateway_idle_timeout"></a> [nat\_gateway\_idle\_timeout](#input\_nat\_gateway\_idle\_timeout) | Idle timeout configuration in minutes for Nat Gateway | `number` | `4` | no |
+| <a name="input_num_database_subnets"></a> [num\_database\_subnets](#input\_num\_database\_subnets) | Number of Database Subnets to be created by the VNet | `number` | `1` | no |
+| <a name="input_num_private_subnets"></a> [num\_private\_subnets](#input\_num\_private\_subnets) | Number of private Subnets to be created by the VNet (Set | `number` | `1` | no |
+| <a name="input_num_public_subnets"></a> [num\_public\_subnets](#input\_num\_public\_subnets) | Number of Public Subnets to be created by the VNet | `number` | `1` | no |
 | <a name="input_os_flavor"></a> [os\_flavor](#input\_os\_flavor) | OS Flavor of the VPN Server. Set to linux always | `string` | `"linux"` | no |
 | <a name="input_public_ip_availability_zone_vpn"></a> [public\_ip\_availability\_zone\_vpn](#input\_public\_ip\_availability\_zone\_vpn) | The availability zone to allocate the Public IP in. Possible values are `Zone-Redundant`, `1`,`2`, `3`, and `No-Zone` | `list(any)` | `[]` | no |
 | <a name="input_public_ip_domain_name_label"></a> [public\_ip\_domain\_name\_label](#input\_public\_ip\_domain\_name\_label) | DNS domain label for NAT Gateway public IP. | `string` | `null` | no |
 | <a name="input_public_ip_ids"></a> [public\_ip\_ids](#input\_public\_ip\_ids) | List of public ips to use in case a public IP for NAT Gateway is not being created. | `list(string)` | `[]` | no |
 | <a name="input_public_ip_reverse_fqdn"></a> [public\_ip\_reverse\_fqdn](#input\_public\_ip\_reverse\_fqdn) | Reverse FQDN for NAT Gateway public IP. | `string` | `null` | no |
-| <a name="input_public_ip_zones"></a> [public\_ip\_zones](#input\_public\_ip\_zones) | Public ip Zones to configure for NAT Gateway. | `list(string)` | <pre>[<br>  "1",<br>  "2"<br>]</pre> | no |
+| <a name="input_public_ip_zones"></a> [public\_ip\_zones](#input\_public\_ip\_zones) | Public ip Zones to configure for NAT Gateway. | `list(string)` | `null` | no |
 | <a name="input_resource_group_location"></a> [resource\_group\_location](#input\_resource\_group\_location) | Region od deployment | `string` | `"eastus"` | no |
 | <a name="input_route_names_database"></a> [route\_names\_database](#input\_route\_names\_database) | A list of database subnets inside the vNet. | `list` | `[]` | no |
 | <a name="input_route_names_private"></a> [route\_names\_private](#input\_route\_names\_private) | A list of public subnets inside the vNet. | `list` | `[]` | no |
@@ -142,7 +152,6 @@ No resources.
 | <a name="input_subnet_names_public"></a> [subnet\_names\_public](#input\_subnet\_names\_public) | Name of the public subnets. If left empty, it is created automatically using name and environment variables. | `list(any)` | `[]` | no |
 | <a name="input_virtual_machine_size"></a> [virtual\_machine\_size](#input\_virtual\_machine\_size) | The Virtual Machine SKU for the Virtual Machine, Default is Standard\_A2\_V2 | `string` | `"Standard_A2_v2"` | no |
 | <a name="input_vpn_nsg_rules"></a> [vpn\_nsg\_rules](#input\_vpn\_nsg\_rules) | Rules to be added to the Network Security Group for the VPN Server | `list(any)` | <pre>[<br>  {<br>    "access": "Allow",<br>    "destination_port_range": "22",<br>    "direction": "Inbound",<br>    "name": "VPNSSHInboundRule",<br>    "priority": 1001,<br>    "protocol": "*",<br>    "source_address_prefix": "*",<br>    "source_port_range": "*"<br>  }<br>]</pre> | no |
-| <a name="input_zones"></a> [zones](#input\_zones) | Number of Availability Zone to be used by VNet | `number` | `3` | no |
 
 ## Outputs
 
