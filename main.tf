@@ -7,17 +7,18 @@ module "resource-group" {
 }
 
 module "vnet" {
-  count               = var.create_vnet ? 1 : 0
-  source              = "Azure/vnet/azurerm"
-  version             = "4.1.0"
-  depends_on          = [module.resource-group]
-  resource_group_name = var.create_resource_group == false ? var.existing_resource_group_name : module.resource-group[0].resource_group_name
-  use_for_each        = true
-  address_space       = [var.address_space]
-  vnet_name           = format("%s-%s-vnet", var.environment, var.name)
-  subnet_prefixes     = concat(local.public_subnets, local.private_subnets, local.database_subnets)
-  subnet_names        = concat(local.subnet_names_public, local.subnet_names_private, local.subnet_names_database)
-  vnet_location       = var.resource_group_location
+  count                = var.create_vnet ? 1 : 0
+  source               = "Azure/vnet/azurerm"
+  version              = "4.1.0"
+  depends_on           = [module.resource-group]
+  resource_group_name  = var.create_resource_group == false ? var.existing_resource_group_name : module.resource-group[0].resource_group_name
+  use_for_each         = true
+  address_space        = [var.address_space]
+  vnet_name            = format("%s-%s-vnet", var.environment, var.name)
+  subnet_prefixes      = concat(local.public_subnets, local.private_subnets, local.database_subnets)
+  subnet_names         = concat(local.subnet_names_public, local.subnet_names_private, local.subnet_names_database)
+  vnet_location        = var.resource_group_location
+  ddos_protection_plan = var.ddos_protection_plan
 
   route_tables_ids = merge(
     (var.create_public_subnets ? (length(local.subnet_names_public) > 0 ? { for subnet_name in local.subnet_names_public : subnet_name => "${module.routetable_public[0].routetable_id}" } : null) : null),

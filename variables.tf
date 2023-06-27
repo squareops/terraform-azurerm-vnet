@@ -48,6 +48,14 @@ variable "address_space" {
   description = "The address space CIDR that is used by the VNet."
   default     = "10.0.0.0/16"
 }
+variable "ddos_protection_plan" {
+  description = "The set of DDoS protection plan configuration"
+  type = object({
+    enable = bool
+    id     = string
+  })
+  default = null
+}
 
 ## SUBNET VARIABLES
 variable "create_public_subnets" {
@@ -253,16 +261,6 @@ variable "public_ip_availability_zone_vpn" {
   type        = list(any)
   default     = []
 }
-
-
-# variable "ddos_protection_plan" {
-#   description = "The set of DDoS protection plan configuration"
-#   type = object({
-#     enable = bool
-#     id     = string
-#   })
-#   default = null
-# }
 # variable "subnet_enforce_private_link_service_network_policies_public" {
 #   type        = map(bool)
 #   default     = {}

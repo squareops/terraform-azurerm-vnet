@@ -18,9 +18,7 @@ output "vnet_name" {
 
 output "database_subnets" {
   description = "Database subnet IDs"
-  # value       = slice(module.vnet[0].vnet_subnets, 0, min(3, length(local.database_subnets)))
   value       = var.create_database_subnets ? length(local.database_subnets) > 0 ? slice(module.vnet[0].vnet_subnets, 0, (length(local.database_subnets))) : [] : null
-  # value       = slice(module.vnet[0].vnet_subnets, 0, (length(local.database_subnets) + 1 - 1))
 }
 
 output "database_subnets_cidr" {
@@ -30,7 +28,7 @@ output "database_subnets_cidr" {
 
 output "private_subnets" {
   description = "Private subnet IDs"
-  value       = var.create_private_subnets ? length(local.private_subnets) > 0 ? (var.create_database_subnets ? slice(module.vnet[0].vnet_subnets, length(local.database_subnets), length(local.database_subnets) + length(local.private_subnets)) : slice(module.vnet[0].vnet_subnets, 0, (length(local.private_subnets))) ) : [] : null 
+  value       = var.create_private_subnets ? length(local.private_subnets) > 0 ? (var.create_database_subnets ? slice(module.vnet[0].vnet_subnets, length(local.database_subnets), length(local.database_subnets) + length(local.private_subnets)) : slice(module.vnet[0].vnet_subnets, 0, (length(local.private_subnets)))) : [] : null
 }
 
 output "private_subnets_cidr" {
