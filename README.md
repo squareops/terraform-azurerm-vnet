@@ -24,8 +24,11 @@ module "vnet" {
   create_private_subnets                          = true
   create_database_subnets                         = true
   create_nat_gateway                              = true
+  num_public_subnets                              = "1"
+  num_private_subnets                             = "1"
+  num_database_subnets                            = "1"
   create_vpn                                      = true
-  enable_logging                                  = true
+  logging_enabled                                 = true
   address_subnets_database                        = ["10.0.1.0/24"]
   address_subnets_private                         = ["10.0.2.0/24"]
   address_subnets_public                          = ["10.0.3.0/24"]  
