@@ -26,7 +26,7 @@ module "vnet" {
   create_database_subnets = false
   num_database_subnets    = 1
   create_nat_gateway      = false
-  enable_logging          = false
+  logging_enabled         = false
   create_vpn              = false
   additional_tags         = local.additional_tags
 }

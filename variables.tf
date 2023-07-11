@@ -218,7 +218,7 @@ variable "nat_gateway_idle_timeout" {
 }
 
 ## LOGGING VARIABLES
-variable "enable_logging" {
+variable "logging_enabled" {
   description = "To enable Logging for VNET"
   type        = string
   default     = true

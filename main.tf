@@ -106,7 +106,7 @@ module "nat_gateway" {
 }
 
 module "logging" {
-  count                     = var.enable_logging ? 1 : 0
+  count                     = var.logging_enabled ? 1 : 0
   source                    = "./modules/logging"
   name                      = var.name
   environment               = var.environment
