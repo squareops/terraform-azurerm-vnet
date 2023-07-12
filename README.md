@@ -34,8 +34,6 @@ module "vnet" {
   address_subnets_public                          = ["10.0.3.0/24"]  
 }
 ```
-Refer [this](https://github.com/squareops/terraform-aws-vpc/tree/main/examples) for more examples.
-
 
 ## Important Note
 To prevent destruction interruptions, any resources that have been created outside of Terraform and attached to the resources provisioned by Terraform must be deleted before the module is destroyed.
@@ -181,14 +179,6 @@ No resources.
 | <a name="output_vnet_subnets_name_id"></a> [vnet\_subnets\_name\_id](#output\_vnet\_subnets\_name\_id) | Can be queried subnet-id by subnet name by using lookup(module.vnet.vnet\_subnets\_name\_id, subnet1) |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-## Contribute & Issue Report
-
-To report an issue with a project:
-
-  1. Check the repository's [issue tracker](https://github.com/squareops/terraform-aws-vpc/issues) on GitHub
-  2. Search to check if the issue has already been reported
-  3. If you can't find an answer to your question in the documentation or issue tracker, you can ask a question by creating a new issue. Make sure to provide enough context and details.
-
 ## License
 
 Apache License, Version 2.0, January 2004 (https://www.apache.org/licenses/LICENSE-2.0)
@@ -197,11 +187,9 @@ Apache License, Version 2.0, January 2004 (https://www.apache.org/licenses/LICEN
 
 To support our GitHub project by liking it, you can follow these steps:
 
-  1. Visit the repository: Navigate to the [GitHub repository](https://github.com/squareops/terraform-aws-vpc)
+  1. Click the "Star" button: On the repository page, you'll see a "Star" button in the upper right corner. Clicking on it will star the repository, indicating your support for the project.
 
-  2. Click the "Star" button: On the repository page, you'll see a "Star" button in the upper right corner. Clicking on it will star the repository, indicating your support for the project.
-
-  3. Optionally, you can also leave a comment on the repository or open an issue to give feedback or suggest changes.
+  2. Optionally, you can also leave a comment on the repository or open an issue to give feedback or suggest changes.
 
 Staring a repository on GitHub is a simple way to show your support and appreciation for the project. It also helps to increase the visibility of the project and make it more discoverable to others.
 
