@@ -13,7 +13,7 @@ Terraform module to create Networking resources for workload deployment on Azure
 
 ```hcl
 module "vnet" {
-  source                                          = "<path-to-module>"
+  source                                          = "squareops/vnet/azurerm"
   name                                            = "skaf"
   address_space                                   = "10.0.0.0/16"
   environment                                     = "production"

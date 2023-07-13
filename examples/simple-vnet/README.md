@@ -30,7 +30,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_vnet"></a> [vnet](#module\_vnet) | ../../ | n/a |
+| <a name="module_vnet"></a> [vnet](#module\_vnet) | [squareops/vnet/azurerm]() | n/a |
 
 ## Resources
 
