@@ -79,7 +79,7 @@ variable "create_private_subnets" {
   default     = true
 }
 variable "num_private_subnets" {
-  description = "Number of private Subnets to be created by the VNet (Set " 
+  description = "Number of private Subnets to be created by the VNet (Set "
   default     = 1
   type        = number
 }
