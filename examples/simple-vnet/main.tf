@@ -11,7 +11,7 @@ locals {
 }
 
 module "vnet" {
-  source                  = "git::https://github.com/sq-ia/terraform-azure-vnet.git?ref=release/v1"
+  source                  = "git::https://github.com/squareops/terraform-azure-vnet.git?ref=release/v1"
   name                    = local.name
   address_space           = local.address_space
   environment             = local.environment
