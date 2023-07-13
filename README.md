@@ -12,7 +12,6 @@ Terraform module to create Networking resources for workload deployment on Azure
 ## Usage Example
 
 ```hcl
-
 module "vnet" {
   source                                          = "<path-to-module>"
   name                                            = "skaf"
@@ -31,9 +30,10 @@ module "vnet" {
   logging_enabled                                 = true
   address_subnets_database                        = ["10.0.1.0/24"]
   address_subnets_private                         = ["10.0.2.0/24"]
-  address_subnets_public                          = ["10.0.3.0/24"]  
+  address_subnets_public                          = ["10.0.3.0/24"]
 }
 ```
+Refer [examples](https://github.com/squareops/terraform-azure-vnet/tree/main/examples) for more details.
 
 ## Important Note
 To prevent destruction interruptions, any resources that have been created outside of Terraform and attached to the resources provisioned by Terraform must be deleted before the module is destroyed.
@@ -65,7 +65,7 @@ This module supports three scenarios to create Virtual Network resources on Azur
   - `create_database_subnets = true`
   - `num_database_subnets    = true`
   - `create_nat_gateway      = true`
-  - `enable_logging          = true`
+  - `logging_enabled          = true`
   - `create_vpn              = true`
 
 
